@@ -26,10 +26,13 @@ public class Punteggio {
 
     /**
      * Una partita nuova, 0 a 0, con la sua regola per vincere.
-     * Pretende: puntiPerVincere è almeno 1; scartoMinimo è almeno 1.
+     * Pretende: niente
      * Promette: una partita 0 a 0, non finita, senza vincitore e con la storia vuota.
      */
     public Punteggio(int puntiPerVincere, int scartoMinimo) {
+        if(puntiPerVincere < 1 || scartoMinimo < 1){
+            throw new IllegalArgumentException();
+        }
         this.puntiPerVincere = puntiPerVincere;
         this.scartoMinimo = scartoMinimo;
         this.storia = new ArrayList<>();
@@ -37,13 +40,16 @@ public class Punteggio {
 
     /**
      * Il lato chi ha fatto un punto.
-     * Pretende: chi non è null.
+     * Pretende: niente
      * Promette: se la partita non era finita, il lato chi ha un punto in più, l'altro lato non
      *           cambia e il punto si aggiunge in fondo alla storia; se con questo punto il lato chi
      *           vince (regola in cima alla classe), la partita è finita e il vincitore è chi.
      *           Se la partita era già finita, non cambia niente.
      */
     public void segnaPunto(Lato chi) {
+        if(chi == null){
+            throw new IllegalArgumentException();
+        }
         if (!isFinita()){
             storia.add(chi);
         }
@@ -51,12 +57,15 @@ public class Punteggio {
     }
 
     /**
-     * Pretende: chi non è null.
+     * Pretende: niente
      * Promette: i punti del lato chi. Non cambia niente.
      */
     public int getPunti(Lato chi) {
-       int punti = 0;
-       for (Lato l : storia){
+        if(chi == null){
+            throw new IllegalArgumentException();
+        }
+        int punti = 0;
+        for (Lato l : storia){
             if ( l == chi){
                 punti++;
             }
@@ -122,5 +131,14 @@ public class Punteggio {
      */
     public void azzera() {
         storia.clear();
+    }
+
+    boolean repOK(){
+        if(storia.contains(null)){
+            throw new IllegalArgumentException();
+        }
+        else{
+            return true;
+        }
     }
 }
